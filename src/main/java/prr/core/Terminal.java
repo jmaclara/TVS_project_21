@@ -1,9 +1,6 @@
 package prr.core;
-import ppr.core.Communication;
 
-import prr.exceptions.InvalidInvocationException;
-
-public enum TerminalMode { OFF, NORMAL, SILENT, BUSY; }
+import prr.core.exceptions.InvalidInvocationException;
 
 public class Terminal {
     private final String id;

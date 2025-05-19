@@ -1,11 +1,6 @@
 package prr.core;
 
-import prr.core.Terminal;
-
 import prr.core.exceptions.InvalidInvocationException;
-
-// CommunicationType enum
-public enum CommunicationType { SMS, VOICE; }
 
 /**
 * This class represents a communication (text or voice) made between

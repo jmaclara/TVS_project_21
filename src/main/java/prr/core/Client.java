@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashSet;
 
-import prr.core.Terminal;
-
 import prr.core.exceptions.InvalidOperationException;
 
 public class Client {
@@ -17,7 +15,7 @@ public class Client {
     private int points;
 
     public Client(String name, int taxNumber, Terminal term) {
-        if (name == null || name.isEmpty() || !chave.matches("\\d+") || name.length() > 40)
+        if (name == null || name.isEmpty() || !name.matches("\\d+") || name.length() > 40)
             throw new InvalidOperationException("Invalid name");
         if (term == null)
             throw new InvalidOperationException("Invalid terminal");

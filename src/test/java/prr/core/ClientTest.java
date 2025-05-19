@@ -1,5 +1,7 @@
 package prr.core;
 
+import prr.core.exceptions.InvalidOperationException;
+
 import org.testng.annotations.*;
 import static org.testng.Assert.*;
 
