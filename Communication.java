@@ -1,21 +1,16 @@
-/**
- * Thrown when a Client method would put the client in an invalid state.
- */
-public class InvalidOperationException extends RuntimeException {
-    public InvalidOperationException(String msg) { super(msg); }
-}
+package prr.core;
 
-/**
- * Thrown when a Terminal method is invoked in an invalid state.
- */
-public class InvalidInvocationException extends RuntimeException {
-    public InvalidInvocationException(String msg) { super(msg); }
-}
+import prr.core.Terminal;
+
+import prr.core.exceptions.InvalidInvocationException;
 
 // CommunicationType enum
 public enum CommunicationType { SMS, VOICE; }
 
-// Communication class
+/**
+* This class represents a communication (text or voice) made between
+* two terminals.
+**/
 public class Communication {
     private CommunicationType type;
     private Terminal from;
@@ -24,14 +19,14 @@ public class Communication {
     private double cost;
     private boolean ended = false;
 
-    private Communication(CommunicationType type, Terminal from, Terminal to) {
+    private Communication(CommunicationType type, Terminal to, Terminal from) {
         this.type = type;
         this.from = from;
         this.to = to;
     }
 
     public static Communication textCommunication(Terminal to, Terminal from, int length) {
-        Communication c = new Communication(CommunicationType.SMS, from, to);
+        Communication c = new Communication(CommunicationType.SMS, to, from);
         c.size = (length + 99) / 100;
         return c;
     }
@@ -40,9 +35,19 @@ public class Communication {
         return textCommunication(to, from, 0);
     }
 
+    public static Communication voiceCommunication(Terminal to, Terminal from, int length) {
+        Communication c = new Communication(CommunicationType.VOICE, to, from);
+        c.size = (length + 99) / 100;
+        return c;
+    }
+
+    public static Communication voiceCommunication(Terminal to, Terminal from) {
+        return voiceCommunication(to, from, 0);
+    }
+
     public void duration(int duration) {
         if (type != CommunicationType.VOICE)
-            throw new InvalidOperationException("duration only for voice");
+            throw new InvalidInvocationException("duration only for voice");
         this.size = duration;
     }
 
@@ -84,3 +89,4 @@ public class Communication {
         from.charge(cost);
         to.credit(0);
     }
+}
