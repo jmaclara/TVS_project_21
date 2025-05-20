@@ -54,19 +54,19 @@ public class Communication {
         if (size == 0) {
             cost = 0;
         } else if (size < 10) {
-            cost = (from.getPoints() > 100) ? 1 : 2;
+            cost = (from.getClient().getPoints() > 100) ? 1 : 2;
         } else if (size < 120) {
-            if (from.getPoints() < 75) {
+            if (from.getClient().getPoints() < 75) {
                 cost = (type == CommunicationType.SMS) ? 6 : 12;
             } else {
                 if (type == CommunicationType.SMS) {
                     cost = 4;
                 } else {
-                    cost = (from.numberOfFriends() < 4) ? 8 : 5;
+                    cost = (from.getClient().numberOfFriends() < 4) ? 8 : 5;
                 }
             }
         } else {
-            cost = (from.getPoints() < 150) ? 15 : 12;
+            cost = (from.getClient().getPoints() < 150) ? 15 : 12;
         }
         return cost;
     }
@@ -75,13 +75,5 @@ public class Communication {
         if (!ended)
             throw new InvalidInvocationException("Cost only available after end");
         return cost;
-    }
-
-    // mark ended and apply balances
-    void end() {
-        ended = true;
-        computeCost();
-        from.charge(cost);
-        to.credit(0);
     }
 }

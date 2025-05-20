@@ -112,10 +112,9 @@ public class Terminal {
         if (ongoing == null)
             throw new InvalidInvocationException("No ongoing call");
 
-        ongoing.end();
         this.mode = prevMode;
         //client.updatePoints(0); // no change
-        Terminal peer = (ongoing.from == this) ? ongoing.to : ongoing.from;
+        Terminal peer = (ongoing.from() == this) ? ongoing.to() : ongoing.from();
         peer.mode = peer.prevMode;
         this.ongoing = null;
         peer.ongoing = null;
